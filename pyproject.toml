@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "threading-practice"
+version = "0.1.0"
+description = ""
+authors = ["acandela260 <20376875+andrew-candela@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "threading_practice"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+beautifulsoup4 = "^4.12.3"
+requests = "^2.32.3"
+lxml = "^5.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
