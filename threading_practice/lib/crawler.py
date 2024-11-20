@@ -1,5 +1,5 @@
 """
-Exposes a class that can be used to 
+Exposes a class that can be used to crawl
 """
 
 import logging
@@ -7,51 +7,15 @@ import requests
 from queue import Queue
 from bs4 import BeautifulSoup, ResultSet
 import threading
-from typing import Any
-from dataclasses import dataclass
 from urllib.parse import urljoin, urlparse
 
 from threading_practice.lib.processors import Processor
 from threading_practice.types.threading import Tombstone
+from threading_practice.types.urls import WebUrlData, StrippedUrl, ScrapedContent
 
 
 logger = logging.getLogger(__name__)
 tombstone = Tombstone()
-
-
-@dataclass
-class ScrapedContent:
-    url: str
-    parsed_content: BeautifulSoup
-
-    def get_link_count(self) -> tuple[str, int]:
-        links = self.parsed_content.find_all("a", href=True)
-        return (self.url, len(links))
-
-
-@dataclass
-class WebUrlData:
-    url: str
-    depth: int = 0
-
-
-@dataclass
-class StrippedUrl:
-    scheme: str
-    netloc: str
-    path: str
-
-    def __str__(self) -> str:
-        return f"{self.scheme}://{self.netloc}{self.path}"
-
-    def __eq__(self, other: Any) -> bool:
-        if isinstance(other, StrippedUrl):
-            return False
-        return (
-            self.scheme == other.scheme
-            and self.netloc == other.netloc
-            and self.path == other.netloc
-        )
 
 
 def strip_url(url: str) -> StrippedUrl:
